@@ -1,7 +1,9 @@
 # social_recruiter
 ## 実行環境
-- Python3.5
-- Django2.0.6
+- 言語：Python3.6
+- Webフレームワーク:Django2.1
+- webサーバ:Nginx + gunicorn
+- AWS EC2 Ubuntu 16.04
 
 ## 画面
 - ログイン
@@ -34,8 +36,11 @@ gunicorn your_project.wsgi --bind=0.0.0.0:8000 -D
 - 位置情報カラムに追加
 - follow follower いる？表示形式検討
 - 高速化
-  - redis
-  - サーバ増やすか..?
+  - とりあえずキャッシュサーバは使いたい(勉強のため)
+- 常時SSL化
+- 静的ファイル配置
 - 類似度
   - COS類似度とか
   - 何で文字列を定量化するかは検討
+  - 多分処理めちゃ重くなるから,Apache beam使いたい
+
