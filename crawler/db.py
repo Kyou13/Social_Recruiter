@@ -4,23 +4,26 @@ import psycopg2
 
 class psql_save(object):
     def __init__(self):
+        self.DB_NAME = os.environ.get("DB_NAME")
         self.conn = psycopg2.connect(
             host="localhost",
-            database="my_db",
+            database=self.DB_NAME,
             port="5432",
-            user="rui",
-            password="password"
+            user=os.environ.get("DB_USER"),
+            password=os.environ.get("DB_PASSWORD")
         )
         self.conn.autocommit = True
         self.cursor = self.conn.cursor()
 
     def insert_user_info(self, user):
-        col_num = 11
+        col_num = 12
+        # %s, %s,.. という文字列を生成
         tmp = ', '.join(['%s' for _ in range(col_num)])
         self.cursor.execute(
-            '''INSERT INTO social_recruit.user_info VALUES ({0})'''.format(tmp),
+            '''INSERT INTO user_info("id", "name", "screen_name", "location", "url", "description", "follows_count", "followers_count", "listed_count", "favourites_count", "tweets_count", "created_at") VALUES ({0})'''.format(tmp),
             (
                 user['id'],
+                user['name'],
                 user['screen_name'],
                 user['location'],
                 user['url'],

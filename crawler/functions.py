@@ -25,6 +25,7 @@ class twitter():
         cursor = -1
         url = 'https://api.twitter.com/1.1/followers/ids.json?'
         params = {'screen_name': screen_name}
+        print("targetUser:{}".format(screen_name))
 
         while cursor != 0 and len(ids)<50000:
             req = self.api.get(url, params=params)
@@ -33,10 +34,10 @@ class twitter():
                 ids.extend(temp['ids'])
                 cursor = temp['next_cursor']
                 params['cursor'] = temp['next_cursor']
-                print('totalGetFollowerNum: {0}'.format(len(ids)))
-                time.sleep(5*random.uniform(0.5,1.5))
+                print('totalGetFollowerNum: {}'.format(len(ids)))
             else:
                 print ("Error: %d at getFollowerIds" % req.status_code)
+            time.sleep(5*random.uniform(0.5,1.5))
         return ids
 
 
@@ -67,6 +68,7 @@ class twitter():
         ids = np.array(ids).astype(str)
         db = psql_save()
 
+        # 100個ずつユーザ情報取得
         for i in tqdm(range(0, len(ids), 100)):
             _ids = ','.join(ids[i:i+100])
             params = {'user_id': _ids}
@@ -82,6 +84,7 @@ class twitter():
             else:
                 print ("Error: %d at getUserInfo()" % req.status_code)
             time.sleep(2*random.uniform(0.5,1.5))
+        db.close_section()
 
 
     def getUserStatuses(self, screen_name):
@@ -95,7 +98,8 @@ class twitter():
             for status in req_text:
                 try:
                     psql.insert_status(status['user']['id'], status['user']['screen_name'], status['id'], status['text'])
-                except:
+                except Exception as e:
+                    print("ERROR:{}".format(e))
                     pass
         else:
             print ("Error: %d at getUserInfo()" % req.status_code)

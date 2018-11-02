@@ -3,28 +3,24 @@ import time
 import random
 import numpy as np
 import pandas as pd
+import argparse
 
 from functions import twitter
 
-# スキーマ・テーブル定義の宣言（初回実行のみ）
-def db_init_setup():
-    from db_setup import psql_save
-    psql = psql_save()
-    psql.recreate_tables()
-
-def get_user_info():
+def get_user_info(targets):
     tw = twitter()
-    # 済：vaaaaanquish, TJO_datasci, ex_takezawa,
-    #
-    target_screen_name = ['tokoroten']
-    for t in target_screen_name:
+    for t in targets:
         ids = tw.getFollowerIds(screen_name=t)
         tw.getUserInfo(ids)
-        time.sleep(60*10)
-
-def main():
-    get_user_info()
-
+        with open("crawl.log", "a") as f:
+          f.write(t+"\n")
+        time.sleep(60*5)
 
 if __name__=='__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    # 空白区切りでtargetを与える ex. -t "user1 user2 user3"
+    parser.add_argument('-t', '--target', help="Target user's screen name", required=True)
+    args = parser.parse_args()
+
+    targets = [i for i in args.target.split()]
+    get_user_info(targets)
