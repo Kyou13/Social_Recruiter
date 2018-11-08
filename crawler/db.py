@@ -13,6 +13,7 @@ class psql_save(object):
             password=os.environ.get("DB_PASSWORD")
         )
         self.conn.autocommit = True
+        # TODO: with使ったやつにしたい
         self.cursor = self.conn.cursor()
 
     def insert_user_info(self, user):
@@ -47,6 +48,14 @@ class psql_save(object):
                 text
             )
         )
+
+    # return
+    # list[tuple(3)]
+    def select_description_all(self):
+        self.cursor.execute(
+            '''SELECT id, description FROM user_info'''
+            )
+        return self.cursor.fetchall()
 
 
     def close_section(self):
