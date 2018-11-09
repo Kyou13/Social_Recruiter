@@ -43,3 +43,4 @@ gunicorn your_project.wsgi --bind=0.0.0.0:8000 -D
   - COS類似度とか
   - 何で文字列を定量化するかは検討
   - 多分処理めちゃ重くなるから,Apache beam使いたい
+- エラー画面

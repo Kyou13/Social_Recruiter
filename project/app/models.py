@@ -1,28 +1,30 @@
 from django.db import models
-from social_django.models import UserSocialAuth
 
-# Create your models here.
-class Person(models.Model):    
-    user_id = models.BigIntegerField(primary_key=True)
-    screen_name =  models.CharField(max_length=128)
-    location =  models.CharField(max_length=128)
-    url =  models.CharField(max_length=128, null=True)
-    description = models.TextField(null=True)
-    friends_count = models.IntegerField()
-    followers_count = models.IntegerField()
-    listed_count = models.IntegerField(null=True)
-    favourites_count = models.IntegerField(null=True)
-    statuses_count = models.IntegerField(null=True)
-    created_at = models.DateTimeField(null=True)
+class UserInfo(models.Model):
+  id = models.BigIntegerField(primary_key=True)
+  name = models.TextField(blank=True, null=True)
+  screen_name = models.TextField(blank=True, null=True)
+  location = models.TextField(blank=True, null=True)
+  url = models.TextField(blank=True, null=True)
+  description = models.TextField(blank=True, null=True)
+  follows_count = models.IntegerField(blank=True, null=True)
+  followers_count = models.IntegerField(blank=True, null=True)
+  listed_count = models.IntegerField(blank=True, null=True)
+  favourites_count = models.IntegerField(blank=True, null=True)
+  tweets_count = models.IntegerField(blank=True, null=True)
+  created_at = models.DateTimeField(blank=True, null=True)
 
-class Message(models.Model):
+  class Meta:
+    # table作らないオプション
+    managed = False
+    db_table = 'user_info'
 
-    message = models.TextField(max_length=10000) #formでtext area
-    user = models.ForeignKey(UserSocialAuth, on_delete=models.SET_NULL, null=True)
+# class Message(models.Model):
+#     message = models.TextField(max_length=10000) #formでtext area
+#     user = models.ForeignKey(UserSocialAuth, on_delete=models.SET_NULL, null=True)
 
-class Introduce(models.Model):
-
-    user = models.OneToOneField(UserSocialAuth, on_delete=models.SET_NULL, null=True)
-    company_name = models.CharField(max_length=64)
-    recruiter = models.CharField(max_length=32)
+# class Introduce(models.Model):
+#     user = models.OneToOneField(UserSocialAuth, on_delete=models.SET_NULL, null=True)
+#     company_name = models.CharField(max_length=64)
+#     recruiter = models.CharField(max_length=32)
 

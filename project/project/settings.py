@@ -31,8 +31,14 @@ INSTALLED_APPS = [
     # 追記
     'bootstrap4',
     'accounts',
-    'social_django',
     'app',
+    'django_extensions',
+    # 'social_django',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.twitter',
 ]
 
 MIDDLEWARE = [
@@ -77,24 +83,16 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         
-        # --- MySQL ---
-        # 'ENGINE': 'django.db.backends.mysql',
-        # 'NAME': 'social_recruiter',
-        # 'USER': 'social',
-        # 'PASSWORD': 'password',
-        # 'HOST': 'mysqlinstance.cemknam06dlj.us-east-2.rds.amazonaws.com',
-        # 'PORT': '3306',
-        
         # --- PosgreSQL ---
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('RDS_DATABASE'),
-        'USER': os.getenv('RDS_USERNAME'),
-        'PASSWORD': os.getenv('RDS_PASSWORD'),
-        'HOST': os.getenv('RDS_HOST'),
+        'NAME': os.getenv('PSQL_DATABASE'),
+        'USER': os.getenv('PSQL_USERNAME'),
+        'PASSWORD': os.getenv('PSQL_PASS'),
+        'HOST': os.getenv('PSQL_HOST'),
         'PORT': '5432',
-        'OPTIONS': {
-            'options': '-c search_path=social_recruiter'
-        },
+#         'OPTIONS': {
+#             'options': '-c search_path=social_recruiter'
+#         },
     }
 }
 
@@ -139,18 +137,19 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 
 AUTHENTICATION_BACKENDS = [
-    'social_core.backends.twitter.TwitterOAuth',
+#     'social_core.backends.twitter.TwitterOAuth',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
 
-
-SOCIAL_AUTH_TWITTER_KEY = os.getenv('SOCIAL_AUTH_TWITTER_KEY') # Consumer Key (API Key)
-SOCIAL_AUTH_TWITTER_SECRET = os.getenv('SOCIAL_AUTH_TWITTER_SECRET') # Consumer Secret (API Secret)
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/' # リダイレクトURL
+SITE_ID = 1
+# SOCIAL_AUTH_TWITTER_KEY = os.getenv('SOCIAL_AUTH_TWITTER_KEY') # Consumer Key (API Key)
+# SOCIAL_AUTH_TWITTER_SECRET = os.getenv('SOCIAL_AUTH_TWITTER_SECRET') # Consumer Secret (API Secret)
+# SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/' # リダイレクトURL
 
 LOGIN_REDIRECT_URL='/'
-LOGOUT_REDIRECT_URL='/'
+AUTH_USER_MODEL = 'accounts.User'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -158,37 +157,38 @@ EMAIL_HOST_USER = 'kyou1013@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASS")
 EMAIL_USE_TLS = True
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'develop': {
-            'format': '%(asctime)s [%(levelname)s] %(pathname)s:%(lineno)d '
-                      '%(message)s'
-        },
-    },
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'develop',
-        },
-    },
-    'loggers': {
-        '': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-        'django': {
-            'handlers': ['console'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-        'django.db.backends': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'develop': {
+#             'format': '%(asctime)s [%(levelname)s] %(pathname)s:%(lineno)d '
+#                       '%(message)s'
+#         },
+#     },
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'develop',
+#         },
+#     },
+#     'loggers': {
+#         '': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#             'propagate': False,
+#         },
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'INFO',
+#             'propagate': False,
+#         },
+#         'django.db.backends': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#             'propagate': False,
+#         },
+#     },
+# }
+

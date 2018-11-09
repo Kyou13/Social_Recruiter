@@ -32,38 +32,37 @@
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead class="text-primary">
-                        <th style="width:20px;">
-                            Index
-                        </th>
-                        <th style="width:25px;">
-                            Screen_name
-                        </th>
-                        <th style="width:30px;">
-                            location
+                        <th>
                         </th>
                         <th>
-                            follower
+                            名前
                         </th>
                         <th>
-                            follow
+                            場所
                         </th>
                         <th>
-                            description
+                            フォロワー
+                        </th>
+                        <th>
+                            フォロー
+                        </th>
+                        <th>
+                            紹介文
                         </th>
                         </thead>
                         <tbody>
                         {% for item in object_list %}
                             <tr>
-                                {# <td>{{item.id}}</td> #}
                                 {% if page %}
+                                  <!- 自作タグindex ->
                                     <td>{{ page|index:forloop.counter }}</td>
                                 {% else %}
                                     <td>{{ forloop.counter }}</td>
                                 {% endif %}
-                                <td><a href='https://twitter.com/{{item.screen_name}}' target="_blank">{{item.screen_name}}</a></td>
+                                <td><a href='https://twitter.com/{{item.screen_name}}' target="_blank">{{item.name}}</a></td>
                                 <td>{{item.location}}</td>
                                 <td>{{item.followers_count}}</td>
-                                <td>{{item.friends_count}}</td>
+                                <td>{{item.follows_count}}</td>
 
                                 <td>{{item.description}}</td>
                             </tr>
