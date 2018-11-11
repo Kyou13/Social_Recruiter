@@ -5,7 +5,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.views.generic import TemplateView, View, ListView
 from django.views.generic.edit import FormView
-# from social_django.models import UserSocialAuth
 from accounts.models import User
 from app.models import UserInfo
 from django.shortcuts import get_object_or_404,render,redirect
@@ -14,6 +13,7 @@ from django.views import generic,View
 from django.contrib import messages
 # from .models import Introduce,Message
 from .forms import ContactForm
+from allauth.socialaccount.models import SocialAccount
 
 APP_NAME = 'app'
 LP_NAME = 'lp'
@@ -30,7 +30,8 @@ class DashboardPage(TemplateView):
     # ログインしているとき
     elif request.user.is_authenticated:
       user = User.objects.get(id=request.user.id)
-      return render(request, self.template_name, {'user': user})
+      social_data = SocialAccount.objects.get(user_id=user).extra_data
+      return render(request, self.template_name, {'user': user, 'social_data':social_data})
 
 # class userProfilePage(LoginRequiredMixin, TemplateView):
 #     template_name = '%s/user.html' % APP_NAME

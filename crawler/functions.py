@@ -36,8 +36,7 @@ class twitter():
                 params['cursor'] = temp['next_cursor']
                 print('totalGetFollowerNum: {}'.format(len(ids)))
             else:
-                print ("Error: %d at getFollowerIds" % req.status_code)
-            time.sleep(5*random.uniform(0.5,1.5))
+                print ("Error: %d at getFollowerIds" % req.status_code) time.sleep(5*random.uniform(0.5,1.5))
         return ids
 
 

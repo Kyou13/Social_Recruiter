@@ -1,6 +1,8 @@
-{% load staticfiles %}
-
 <!doctype html>
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='slim' %}
 <html lang="ja">
 
 <head>
@@ -14,8 +16,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
   <link href="{% static 'app/assets/css/material-dashboard.css' %}" rel="stylesheet" />
-  <link href="{% static 'app/assets/css/custom.css' %}" rel="stylesheet" />
   <link href="{% static 'app/assets/css/animsition.min.css' %}" rel="stylesheet" />
+  <link href="{% static 'app/assets/css/custom.css' %}" rel="stylesheet" />
 </head>
 
 <body class="">
@@ -36,14 +38,6 @@
                       <p>Dashboard</p>
                   </a>
               </li>
-              <!--
-              <li class="nav-item" id="user">
-                  <a class="nav-link" href="/user">
-                      <i class="material-icons">person</i>
-                      <p>User Profile</p>
-                  </a>
-              </li>
-              -->
               <li class="nav-item" id="table">
                   <a class="nav-link" href="/tables">
                       <i class="material-icons">content_paste</i>
