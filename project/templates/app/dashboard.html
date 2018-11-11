@@ -7,6 +7,7 @@
 {% block content %}
 
   こんにちは! <strong>{{ user }}</strong> さん
+
 <div class="row">
   <div class="col-md-4">
     <div class="card card-stats">
@@ -37,7 +38,7 @@
   <div class="col-md-4">
     <div class="card card-chart">
       <div class="card-header card-header-success">
-        <div class="ct-chart" id="dailySalesChart"></div>
+        <div class="ct-chart"></div>
       </div>
       <div class="card-body">
         <h4 class="card-title">フォロワー遷移</h4>
@@ -335,9 +336,32 @@
   </div>
 </div>
 
+  {% block add_script %}
     <script>
         var activeElement = document.getElementById('dashboard');
         activeElement.classList.add('active');
+
+        var date = [];
+        {% for i in twitterStatus.date %}
+            date.push("{{ i }}");
+        {% endfor %}
+        var data = {
+            labels: date,
+            series: [
+                {{ twitterStatus.followers }}
+            ]
+        };
+        var options =
+            {
+                lineSmooth: Chartist.Interpolation.cardinal({
+                    tension: 0.2
+                })
+            };
+
+        new Chartist.Line('.ct-chart', data, options);
+
     </script>
+  {% endblock %}
+
 
 {% endblock %}

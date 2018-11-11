@@ -1,19 +1,17 @@
-from django.shortcuts import render
+import os
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from django.http import HttpResponse
 from django.views.generic import TemplateView, View, ListView
 from django.views.generic.edit import FormView
-from accounts.models import User
+from accounts.models import SocialUser
 from app.models import UserInfo
 from django.shortcuts import get_object_or_404,render,redirect
-from django.urls import reverse_lazy, reverse
-from django.views import generic,View
 from django.contrib import messages
-# from .models import Introduce,Message
 from .forms import ContactForm
 from allauth.socialaccount.models import SocialAccount
+from project import settings
+from datetime import datetime
 
 APP_NAME = 'app'
 LP_NAME = 'lp'
@@ -29,9 +27,22 @@ class DashboardPage(TemplateView):
 
     # ログインしているとき
     elif request.user.is_authenticated:
-      user = User.objects.get(id=request.user.id)
-      social_data = SocialAccount.objects.get(user_id=user).extra_data
-      return render(request, self.template_name, {'user': user, 'social_data':social_data})
+      user = SocialUser.objects.get(id=request.user.id)
+      socialAccount = SocialAccount.objects.get(user_id=user).extra_data
+      userId = socialAccount['id_str']
+      with open(os.path.join(settings.BASE_DIR,'log',userId + '.txt'),'r') as f:
+        twitterStatus = [i.replace('\n','') for i in f.readlines()][:100]
+      date = []
+      follows = []
+      followers = []
+      for day in twitterStatus:
+        date.append(datetime.strptime(day.split(',')[0], '%Y/%m/%d %H:%M:%S').strftime('%m/%d'))
+        follows.append(int(day.split(',')[1]))
+        followers.append(int(day.split(',')[2]))
+      twitterStatus ={'date': date, 'follows': follows, 'followers': followers}
+      print(date)
+
+      return render(request, self.template_name, {'user': user, 'social_data': socialAccount, 'twitterStatus': twitterStatus})
 
 # class userProfilePage(LoginRequiredMixin, TemplateView):
 #     template_name = '%s/user.html' % APP_NAME

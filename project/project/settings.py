@@ -148,7 +148,7 @@ SITE_ID = 1
 # SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/' # リダイレクトURL
 
 LOGIN_REDIRECT_URL='/'
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'accounts.SocialUser'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
 EMAIL_HOST = 'smtp.gmail.com'
