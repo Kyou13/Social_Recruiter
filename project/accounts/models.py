@@ -11,7 +11,10 @@ class SocialUser(AbstractUser):
 
   def get_liked_users(self):
     relations = Relationship.objects.filter(user=self)
-    return [relation.liked_user for relation in relations]
+    user_id_list = [relation.liked_user.id for relation in relations]
+    result = UserInfo.objects.filter(pk__in = user_id_list)
+    return result
+
 
 class Relationship(models.Model):
   user = models.ForeignKey(SocialUser, on_delete=models.DO_NOTHING)

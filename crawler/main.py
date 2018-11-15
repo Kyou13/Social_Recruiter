@@ -8,6 +8,7 @@ import argparse
 from functions import twitter
 
 def get_user_info(targets):
+
     tw = twitter()
     for t in targets:
         ids = tw.getFollowerIds(screen_name=t)

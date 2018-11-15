@@ -336,32 +336,36 @@
   </div>
 </div>
 
-  {% block add_script %}
-    <script>
-        var activeElement = document.getElementById('dashboard');
-        activeElement.classList.add('active');
-
-        var date = [];
-        {% for i in twitterStatus.date %}
-            date.push("{{ i }}");
-        {% endfor %}
-        var data = {
-            labels: date,
-            series: [
-                {{ twitterStatus.followers }}
-            ]
-        };
-        var options =
-            {
-                lineSmooth: Chartist.Interpolation.cardinal({
-                    tension: 0.2
-                })
-            };
-
-        new Chartist.Line('.ct-chart', data, options);
-
-    </script>
-  {% endblock %}
-
 
 {% endblock %}
+
+{% block add_script %}
+  <script>
+      var activeElement = document.getElementById('dashboard');
+      activeElement.classList.add('active');
+
+      var date = [];
+      {% for i in twitterStatus.date %}
+          date.push("{{ i }}");
+      {% endfor %}
+      var data = {
+          labels: date,
+          series: [
+              {{ twitterStatus.followers }}
+          ]
+      };
+      var options =
+          {
+              low: {{ twitterStatus.followers_min  }},
+              high: {{ twitterStatus.followers_max  }},
+              scaleMinSpace: 20,
+              lineSmooth: Chartist.Interpolation.cardinal({
+                  tension: 0.2
+              })
+          };
+
+      new Chartist.Line('.ct-chart', data, options);
+
+  </script>
+{% endblock %}
+
