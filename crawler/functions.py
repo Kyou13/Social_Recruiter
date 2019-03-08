@@ -1,4 +1,5 @@
 import os
+from os.path import join, dirname
 import json
 import time
 import random
@@ -8,10 +9,13 @@ import numpy as np
 from db import psql_save, RDS
 from requests_oauthlib import OAuth1Session
 
+from dotenv import load_dotenv
 
 class twitter():
     def __init__(self):
         # 環境変数から承認情報を取得
+        dotenv_path = join(dirname(__file__), '.env')
+        load_dotenv(dotenv_path)
         CONSUMER_KEY    = os.environ['TWITTER_CONSUMER_KEY']
         CONSUMER_SECRET = os.environ['TWITTER_CONSUMER_SECRET']
         ACCESS_TOKEN    = os.environ['TWITTER_ACCESS_TOKEN']

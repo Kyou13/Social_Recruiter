@@ -15,7 +15,7 @@ def get_user_info(targets):
         tw.getUserInfo(ids)
         with open("crawl.log", "a") as f:
           f.write(t+"\n")
-        time.sleep(60*5)
+        time.sleep(5)
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()

@@ -1,0 +1,7 @@
+.card-content{
+  display: inline-block;
+  margin-right: 10px;
+}
+.card-stats .card-header.card-header-icon, .card-stats .card-header.card-header-text{
+  padding: 0.9375rem;
+}

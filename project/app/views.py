@@ -101,13 +101,13 @@ class FavoritePage(ListView):
 
 
 class ContactView(FormView):
-    template_name = "app/contactForm.html"
-    form_class = ContactForm
-    success_url = "/contact"
+  template_name = "app/contactForm.html"
+  form_class = ContactForm
+  success_url = "/contact"
 
-    def form_valid(self, form):
-        result = super().form_valid(form)
-        # formで定義したメソッド呼び出し
-        form.send_email()
-        messages.success(self.request, '送信完了')
-        return result
+  def form_valid(self, form):
+    result = super().form_valid(form)
+    # formで定義したメソッド呼び出し
+    form.send_email()
+    messages.success(self.request, '送信完了')
+    return result

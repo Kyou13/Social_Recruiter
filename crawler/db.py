@@ -1,9 +1,13 @@
 # DBのセットアップ用スクリプト
+# create table user_info(id BIGINT NOT NULL UNIQUE, name TEXT, screen_name TEXT, location TEXT, url TEXT, description TEXT, follows_count INTEGER, followers_count INTEGER, listed_count INTEGER, favourites_count INTEGER, tweets_count INTEGER, created_at timestamp);
 import os
 import psycopg2
+from dotenv import load_dotenv
 
 class psql_save(object):
     def __init__(self):
+        dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+        load_dotenv(dotenv_path)
         self.DB_NAME = os.environ.get("DB_NAME")
         self.conn = psycopg2.connect(
             host="localhost",
