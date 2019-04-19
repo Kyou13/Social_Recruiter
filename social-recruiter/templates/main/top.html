@@ -1,0 +1,139 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}
+  Social Recruiter
+{% endblock %}
+
+{% block extra_css %}
+  <!-- Font Awesome Icons -->
+  <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+  <!-- Plugin CSS -->
+  <link href="{% static 'vendor/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
+
+  <!-- Theme CSS - Includes Bootstrap -->
+  <link href="{% static 'main/css/creative.min.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">Twitter Scouter</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto my-2 my-lg-0">
+        <li class="nav-item my-auto">
+          <a class="nav-link js-scroll-trigger" href="#about">TwitterScouterとは</a>
+        </li>
+        <li class="nav-item my-auto">
+          <a class="nav-link js-scroll-trigger" href="#services">主な機能</a>
+        </li>
+        <li class="nav-item my-auto">
+          <a class="nav-link js-scroll-trigger" href="#contact">お問い合わせ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-outline-primary register-btn p-2" role="button">会員登録</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Masthead -->
+<header class="masthead">
+  <div class="container h-100">
+    <div class="row h-100 align-items-center justify-content-center text-center">
+      <div class="col-lg-10 align-self-end">
+        <h1 class="text-uppercase text-white font-weight-bold">Twitter Scouter</h1>
+        <hr class="divider my-4">
+      </div>
+      <div class="col-lg-8 align-self-baseline">
+        <p class="text-white-75 font-weight-light mb-5">勝手に応募者が集まってくる夢のツール!企業の採用アカウント運用自動化します</p>
+        <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">詳しく見る</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- About Section -->
+<section class="page-section bg-primary" id="about">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center">
+        <h2 class="text-white mt-0">About</h2>
+        <hr class="divider light my-4">
+        <p class="text-white-50 mb-4">Social Recruiterは人事のTwitter運用を自動化します</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="page-section" id="services">
+  <div class="container">
+    <h2 class="text-center mt-0">Service</h2>
+    <hr class="divider my-4">
+    <div class="row">
+      <div class="col-lg-4 col-md-6 text-center">
+        <div class="mt-5">
+          <i class="fas fa-4x fa-users text-primary mb-4"></i>
+          <h3 class="h4 mb-2">自動フォロー</h3>
+          <p class="text-muted mb-0">AIが御社の求人条件を解析、有望な採用候補者をTwitter上で自動フォローします</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 text-center">
+        <div class="mt-5">
+          <i class="fas fa-4x fa-globe text-primary mb-4"></i>
+          <h3 class="h4 mb-2">自動リストアップ</h3>
+          <p class="text-muted mb-0">AIが有望な採用候補者を自動でリストアップ、優先順位を表示します</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-md-offset-3 text-center">
+        <div class="mt-5">
+          <i class="fas fa-4x fa-heart text-primary mb-4"></i>
+          <h3 class="h4 mb-2">自動スカウト</h3>
+          <p class="text-muted mb-0">AIが御社の希望に基づき自動でスカウトDMを配信、エントリーへ誘導します</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="page-section bg-primary" id="contact">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center">
+        <h2 class="text-white mt-0">お問い合わせ</h2>
+        <hr class="divider my-4">
+        <p class="text-white-50 mb-5">ディップ株式会社<br/>〒106-6231<br/>東京都港区六本木3-2-1<br/>六本木グランドタワー31F</p>
+        <img src="{% static 'main/img/footer_logo.png' %}">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-light py-5">
+  <div class="container">
+    <div class="small text-center text-muted">Copyright &copy; DIP Corporation. All Rights Reserved</div>
+  </div>
+</footer>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Plugin JavaScript -->
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<script src="{% static 'vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+
+<!-- Custom scripts for this template -->
+<script src="{% static 'main/js/creative.min.js' %}"></script>
+{% endblock %}
+

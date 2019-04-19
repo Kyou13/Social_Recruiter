@@ -1,0 +1,16 @@
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='slim' %}
+<!DOCTYPE html>
+ <html lang="{{ LANGUAGE_CODE|default:"en-us" }}">
+ <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{% endblock %}</title>
+{% block extra_css %}{% endblock %}
+</head>
+<body id="page-top">
+{% block content %}{% endblock %}
+{% block extra_js %}{% endblock %}
+</body>
+</html>
