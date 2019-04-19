@@ -1,10 +1,9 @@
-{% extends 'main/base.html' %}
 {% load static %}
-{% block title %}
-  Social Recruiter
-{% endblock %}
-
-{% block extra_css %}
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Social Recruiter</title>
   <!-- Font Awesome Icons -->
   <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
 
@@ -13,9 +12,8 @@
 
   <!-- Theme CSS - Includes Bootstrap -->
   <link href="{% static 'main/css/creative.min.css' %}" rel="stylesheet">
-{% endblock %}
-
-{% block content %}
+</head>
+<body id="page-top">
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
   <div class="container">
@@ -35,7 +33,7 @@
           <a class="nav-link js-scroll-trigger" href="#contact">お問い合わせ</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link btn btn-outline-primary register-btn p-2" role="button">会員登録</a>
+          <a href="{% url 'twitter_login' %}" class="nav-link btn btn-outline-primary register-btn p-2" role="button">会員登録</a>
         </li>
       </ul>
     </div>
@@ -122,9 +120,7 @@
     <div class="small text-center text-muted">Copyright &copy; DIP Corporation. All Rights Reserved</div>
   </div>
 </footer>
-{% endblock %}
 
-{% block extra_js %}
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -135,5 +131,8 @@
 
 <!-- Custom scripts for this template -->
 <script src="{% static 'main/js/creative.min.js' %}"></script>
-{% endblock %}
+</body>
+</html>
+
+
 
