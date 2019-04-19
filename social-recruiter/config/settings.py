@@ -48,6 +48,7 @@ INSTALLED_APPS = [
   'allauth.socialaccount',
   'allauth.socialaccount.providers.twitter',
   'bootstrap4',
+  'django_extensions',
 ]
 
 MIDDLEWARE = [

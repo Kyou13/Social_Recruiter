@@ -26,7 +26,7 @@ $ echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
 
 ```
 # git clone this repositocy
-% pipenv install
+% pipenv install --dev
 % pipenv shell
 % python main.py runserver
 ```

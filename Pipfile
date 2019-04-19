@@ -4,9 +4,10 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+django-extensions = "*"
 
 [packages]
-django = "==2.1"
+django = "~=2.1.6"
 django-allauth = "*"
 django-environ = "*"
 psycopg2-binary = "*"
