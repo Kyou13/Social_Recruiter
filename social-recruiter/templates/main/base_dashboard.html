@@ -5,7 +5,7 @@
 {% endblock %}
 {% block extra_css %}
   <!-- Our Custom CSS -->
-  <link rel="stylesheet" href="{% static 'main/css/home.css' %}">
+  <link rel="stylesheet" href="{% static 'main/css/dashboard.css' %}">
   <!-- Scrollbar Custom CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 {% endblock %}
@@ -18,13 +18,10 @@
       </div>
       <ul class="list-unstyled components">
         <li>
-          <a href="#">Dashboard</a>
+          <a href="{% url 'main:dashboard' %}#">Dashboard</a>
         </li>
         <li>
-          <a href="#">Portfolio</a>
-        </li>
-        <li>
-          <a href="#">Contact</a>
+          <a href="{% url 'main:user_list' 1 %}">UserList</a>
         </li>
       </ul>
     </nav>
@@ -35,7 +32,6 @@
         <div class="container-fluid">
           <button type="button" id="sidebarCollapse" class="btn btn-info">
             <i class="fas fa-align-left"></i>
-            <span>Toggle Sidebar</span>
           </button>
           <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-align-justify"></i>
@@ -53,10 +49,10 @@
         </div>
       </nav>
 
-      <h2>Lorem Ipsum Dolor</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-      <div class="line"></div>
+    <div class="container">
+      {% block dashboard_content %}
+      {% endblock %}
+    </div>
 
     </div>
   </div>

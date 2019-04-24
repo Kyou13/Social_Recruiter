@@ -2448,7 +2448,7 @@ textarea.form-control {
 }
 
 .btn:hover {
-  color: #212529;
+  color: #fff;
   text-decoration: none
 }
 
@@ -4881,15 +4881,6 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 
 .breadcrumb-item.active {
   color: #6c757d
-}
-
-.pagination {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding-left: 0;
-  list-style: none;
-  border-radius: .25rem
 }
 
 .page-link {
@@ -10061,7 +10052,4 @@ header.masthead h1 {
 
 #portfolio .container-fluid .portfolio-box:hover .portfolio-box-caption {
   opacity: 1
-}
-.register-btn{
-
 }

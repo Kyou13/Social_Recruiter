@@ -2,7 +2,12 @@
 ## Description
 Twitterを使ったエンジニア採用
 
+## UI
+### Top
 ![スクリーンショット 2019-04-20 12 47 19](https://user-images.githubusercontent.com/13377817/56452272-1b2b8c00-636b-11e9-8d50-8d87701a490e.png)
+### Dashboard
+![スクリーンショット 2019-04-24 16 36 47](https://user-images.githubusercontent.com/13377817/56641022-530a3a80-66af-11e9-9c1d-a17f775ec541.png)
+
 ## Requirement
 - Python 3.7.3
   - pyenv + pipenv
@@ -31,3 +36,4 @@ Twitterを使ったエンジニア採用
 % pipenv shell
 % python main.py runserver
 ```
+all-authの設定

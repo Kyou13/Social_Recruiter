@@ -10,6 +10,8 @@
 
   <!-- Theme CSS - Includes Bootstrap -->
   <link href="{% static 'main/css/creative.min.css' %}" rel="stylesheet">
+
+  <link href="{% static 'main/css/top.css' %}" rel="stylesheet">
 </head>
 <body id="page-top">
 <!-- Navigation -->
@@ -31,12 +33,29 @@
           <a class="nav-link js-scroll-trigger" href="#contact">お問い合わせ</a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'twitter_login' %}" class="nav-link btn btn-outline-primary register-btn p-2" role="button">会員登録</a>
+          <a href="#modal01" class="nav-link btn btn-outline-primary register-btn p-2 modalOpen" role="button">ログイン</a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+
+<div class="modal" id="modal01">
+  <div class="overLay modalClose"></div>
+
+  <div class="inner">
+      <form method="post" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        {{form.as_p}}
+{#        <button type="submit">Sign In</button>#}
+        <button type="submit" class="btn btn-login">ログイン</button>
+      </form>
+    <div class="twitter-login-btn">
+{#      <a href="{% url 'account_login' %}" class="btn btn-login">ログイン</button>#}
+      <a href="{% url 'twitter_login' %}" class="btn btn-primary">Twitterでログイン</a>
+    </div>
+  </div>
+</div>
 
 <!-- Masthead -->
 <header class="masthead">
@@ -129,6 +148,7 @@
 
 <!-- Custom scripts for this template -->
 <script src="{% static 'main/js/creative.min.js' %}"></script>
+<script src="{% static 'main/js/top.js' %}"></script>
 </body>
 </html>
 
