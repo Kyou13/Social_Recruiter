@@ -12,7 +12,7 @@ Twitterを使ったエンジニア採用
 - Python 3.7.3
   - pyenv + pipenv
 - Django 2.1.3
-- Posgtg
+- PostgreSQL
 
 ## Usage
 - Install pyenv
@@ -23,7 +23,6 @@ Twitterを使ったエンジニア採用
 % echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
 % exec $SHELL -l
 ```
-
 - Install pipenv
 ```
 % brew install pipenv
@@ -52,5 +51,13 @@ adminページ> 外部アカウントのsocial applications
 - Database
   - ダンプファイルのリストア
 ```
-psql twitter_scouter < backup.dump
+% psql twitter_scouter < backup.dump
 ```
+
+
+
+サーバ起動
+```
+% python manaeg.py runserver
+```
+
