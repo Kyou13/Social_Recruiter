@@ -4,6 +4,27 @@
   word-wrap: break-word;
 }
 
-.table a{
+table td.twitter-name a{
   text-decoration: underline;
+}
+
+.button-as_like{
+  background: none;
+  border: none;
+  padding: 0;
+}
+.button-as_like:hover > i{
+  color: #e0245e;
+}
+i.like-active{
+  color: #e0245e;
+}
+i.like-deactive{
+  color: #657786;
+}
+.button-as_like:hover > i.like-active{
+  color: #657786;
+}
+.button-as_like:hover > i.like-deactive{
+  color: #e0245e;
 }

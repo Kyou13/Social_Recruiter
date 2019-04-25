@@ -11,25 +11,29 @@
   <link rel="stylesheet" href="{% static 'main/css/user_list.css' %}">
 {% endblock %}
 {% block dashboard_content %}
-  <table class="table">
+  <table class="table like-user-list">
     <thead>
     <tr>
-      <th scope="col" class="col-sm-4" style="width: 20px;"></th>
-      <th scope="col" class="col-sm-4" style="width: 200px;">名前</th>
-      <th scope="col" class="col-sm-2" style="width: 120px;">フォロワー</th>
-      <th scope="col" class="col-sm-6">自己紹介</th>
+      <th scope="col" style="width: 20px;"></th>
+      <th scope="col" style="width: 200px;">名前</th>
+      <th scope="col" style="width: 120px;">フォロワー</th>
+      <th scope="col">自己紹介</th>
     </tr>
     </thead>
     <tbody>
     {% for like in contents %}
       <tr>
-        <td style="vertical-align: middle;">
-          <a href="{% url 'main:like' like.twitter_user.pk %}" class="fas fa-1x fa-heart">
-          </a>
+        <td class="align-middle like-td">
+          <form name="like_form" action="{% url 'main:like' user.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="button-as_like">
+              <i class="fas fa-1x fa-heart like-active"></i>
+            </button>
+          </form>
         </td>
-        <td scope="row" ><a href="https://twitter.com/{{ like.twitter_user.screen_name }}">{{ like.twitter_user.name }}</a></td>
-        <td>{{ like.twitter_user.followers_count }}</td>
-        <td>{{ like.twitter_user.description }}</td>
+        <td class="align-middle twitter-name" scope="row" ><a href="https://twitter.com/{{ like.twitter_user.screen_name }}">{{ like.twitter_user.name }}</a></td>
+        <td class="align-middle">{{ like.twitter_user.followers_count }}</td>
+        <td class="align-middle">{{ like.twitter_user.description }}</td>
       </tr>
     {% endfor %}
     </tbody>

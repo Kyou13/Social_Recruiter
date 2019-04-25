@@ -43,7 +43,8 @@ class SignoutView(views.LogoutView):
 
 class UserList(View, LoginRequiredMixin):
   def get(self, request, **kwargs):
-    queryset = UserInfo.objects.all()
+    queryset = UserInfo.objects.all().order_by('-followers_count')
+    liked_user = Like.objects.filter(user=request.user).values_list('twitter_user', flat=True)
     # TODO: per page can be change
     paginator = Paginator(queryset, 20)
     try:
@@ -52,11 +53,11 @@ class UserList(View, LoginRequiredMixin):
       contents = paginator.page(1)
     except EmptyPage:
       contents = paginator.page(paginator.num_pages)
-    return render(request, 'main/user_list.html', {'contents': contents})
+    return render(request, 'main/user_list.html', {'contents': contents, 'liked_user': liked_user})
 
 
 class Favorite(View, LoginRequiredMixin):
-  def get(self, request, *args, **kwargs):
+  def post(self, request, *args, **kwargs):
     twitter_user = UserInfo.objects.get(id=kwargs['twitter_id'])
     is_like = Like.objects.filter(user=request.user).filter(twitter_user=twitter_user).count()
     if is_like > 0:
@@ -73,7 +74,7 @@ class Favorite(View, LoginRequiredMixin):
     like.twitter_user = twitter_user
     like.save()
     messages.success(request, 'いいね!しました')
-    # アクセス元による切り替え
+
     return redirect(reverse_lazy('main:user_list', kwargs=dict(page=1)))
 
 class LikeList(View, LoginRequiredMixin):

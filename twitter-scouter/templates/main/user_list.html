@@ -11,25 +11,35 @@
   <link rel="stylesheet" href="{% static 'main/css/user_list.css' %}">
 {% endblock %}
 {% block dashboard_content %}
-  <table class="table">
+  {{ like_list }}
+  <table class="table twitter-user-list">
     <thead>
     <tr>
-      <th scope="col" class="col-sm-4" style="width: 20px;"></th>
-      <th scope="col" class="col-sm-4" style="width: 200px;">名前</th>
-      <th scope="col" class="col-sm-2" style="width: 120px;">フォロワー</th>
-      <th scope="col" class="col-sm-6">自己紹介</th>
+      <th scope="col" style="width: 20px;"></th>
+      <th scope="col" style="width: 200px;">名前</th>
+      <th scope="col" style="width: 120px;">フォロワー</th>
+      <th scope="col">自己紹介</th>
     </tr>
     </thead>
     <tbody>
     {% for user in contents %}
       <tr>
-        <td style="vertical-align: middle;">
-          <a href="{% url 'main:like' user.pk %}" class="fas fa-1x fa-heart">
-          </a>
+        <td class="align-middle like-td">
+          <form name="like_form" action="{% url 'main:like' user.pk %}" method="post">
+            {% csrf_token %}
+          <input name="next" type="hidden" value="{{ request.path }}">
+            <button type="submit" class="button-as_like">
+              {% if user.pk not in liked_user %}
+                <i class="fas fa-1x fa-heart like-deactive"></i>
+              {% else %}
+                <i class="fas fa-1x fa-heart like-active"></i>
+              {% endif %}
+            </button>
+          </form>
         </td>
-        <td scope="row" ><a href="https://twitter.com/{{ user.screen_name }}">{{ user.name }}</a></td>
-        <td>{{ user.followers_count }}</td>
-        <td>{{ user.description }}</td>
+        <td class="align-middle twitter-name" scope="row" ><a href="https://twitter.com/{{ user.screen_name }}">{{ user.name }}</a></td>
+        <td class="align-middle">{{ user.followers_count }}</td>
+        <td class="align-middle">{{ user.description }}</td>
       </tr>
     {% endfor %}
     </tbody>
@@ -41,9 +51,9 @@
           <a href="{% url 'main:user_list' 1 %}" class="page-link">1</a>
         </li>
       {% else %}
-      <li class="page-item disabled">
-        <a href="#" class="page-link">1</a>
-      </li>
+        <li class="page-item disabled">
+          <a href="#" class="page-link">1</a>
+        </li>
       {% endif %}
       {% if contents.number|add:"-5" >= 1 %}
         <li class="page-item">
@@ -70,7 +80,7 @@
         <li class="page-item">
           <a href="{% url 'main:user_list' contents.next_page_number %}" class="page-link">></a>
         </li>
-        {% else %}
+      {% else %}
         <li class="page-item disabled">
           <a href="#" class="page-link">></a>
         </li>
