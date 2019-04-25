@@ -3,8 +3,10 @@ from django.views import View
 from allauth.account import views
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import UserInfo
+from .models import UserInfo, Like
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.contrib import messages
+from django.urls import reverse_lazy
 
 
 class Top(View):
@@ -16,20 +18,6 @@ class DashBoard(View, LoginRequiredMixin):
   def get(self, request):
 
     return render(request, 'main/dashboard.html')
-
-
-class UserList(View, LoginRequiredMixin):
-  def get(self, request, page):
-    queryset = UserInfo.objects.all()
-    # TODO: per page can be change
-    paginator = Paginator(queryset, 20)
-    try:
-      contents = paginator.page(page)
-    except PageNotAnInteger:
-      contents = paginator.page(1)
-    except EmptyPage:
-      contents = paginator.page(paginator.num_pages)
-    return render(request, 'main/user_list.html', {'contents': contents})
 
 
 class SigninView(views.LoginView):
@@ -51,3 +39,51 @@ class SignoutView(views.LogoutView):
     if self.request.user.is_authenticated:
       self.logout()
     return redirect('/')
+
+
+class UserList(View, LoginRequiredMixin):
+  def get(self, request, **kwargs):
+    queryset = UserInfo.objects.all()
+    # TODO: per page can be change
+    paginator = Paginator(queryset, 20)
+    try:
+      contents = paginator.page(kwargs['page'])
+    except PageNotAnInteger:
+      contents = paginator.page(1)
+    except EmptyPage:
+      contents = paginator.page(paginator.num_pages)
+    return render(request, 'main/user_list.html', {'contents': contents})
+
+
+class Favorite(View, LoginRequiredMixin):
+  def get(self, request, *args, **kwargs):
+    twitter_user = UserInfo.objects.get(id=kwargs['twitter_id'])
+    is_like = Like.objects.filter(user=request.user).filter(twitter_user=twitter_user).count()
+    if is_like > 0:
+      liking = Like.objects.get(twitter_user__id=kwargs['twitter_id'], user=request.user)
+      liking.delete()
+      twitter_user.like_num -= 1
+      twitter_user.save()
+      messages.warning(request, 'いいねを取り消しました')
+      return redirect(reverse_lazy('main:user_list', kwargs=dict(page=1)))
+    twitter_user.like_num += 1
+    twitter_user.save()
+    like = Like()
+    like.user = request.user
+    like.twitter_user = twitter_user
+    like.save()
+    messages.success(request, 'いいね!しました')
+    # アクセス元による切り替え
+    return redirect(reverse_lazy('main:user_list', kwargs=dict(page=1)))
+
+class LikeList(View, LoginRequiredMixin):
+  def get(self, request, *args, **kwargs):
+    like_twitter_user = Like.objects.filter(user=request.user)
+    paginator = Paginator(like_twitter_user, 20)
+    try:
+      contents = paginator.page(kwargs['page'])
+    except PageNotAnInteger:
+      contents = paginator.page(1)
+    except EmptyPage:
+      contents = paginator.page(paginator.num_pages)
+    return render(request, 'main/like_list.html', {'contents': contents})

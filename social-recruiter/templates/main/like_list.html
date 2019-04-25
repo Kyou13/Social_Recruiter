@@ -1,7 +1,7 @@
 {% extends 'main/base_dashboard.html' %}
 {% load static %}
 {% block title %}
-  UserList
+  LikeList
 {% endblock %}
 {% block extra_css %}
   <!-- Our Custom CSS -->
@@ -21,15 +21,15 @@
     </tr>
     </thead>
     <tbody>
-    {% for user in contents %}
+    {% for like in contents %}
       <tr>
         <td style="vertical-align: middle;">
-          <a href="{% url 'main:like' user.pk %}" class="fas fa-1x fa-heart">
+          <a href="{% url 'main:like' like.twitter_user.pk %}" class="fas fa-1x fa-heart">
           </a>
         </td>
-        <td scope="row" ><a href="https://twitter.com/{{ user.screen_name }}">{{ user.name }}</a></td>
-        <td>{{ user.followers_count }}</td>
-        <td>{{ user.description }}</td>
+        <td scope="row" ><a href="https://twitter.com/{{ like.twitter_user.screen_name }}">{{ like.twitter_user.name }}</a></td>
+        <td>{{ like.twitter_user.followers_count }}</td>
+        <td>{{ like.twitter_user.description }}</td>
       </tr>
     {% endfor %}
     </tbody>
@@ -38,7 +38,7 @@
     <ul class="pagination justify-content-center">
       {% if contents.has_previous %}
         <li class="page-item">
-          <a href="{% url 'main:user_list' 1 %}" class="page-link">1</a>
+          <a href="{% url 'main:like_list' 1 %}" class="page-link">1</a>
         </li>
       {% else %}
       <li class="page-item disabled">
@@ -47,7 +47,7 @@
       {% endif %}
       {% if contents.number|add:"-5" >= 1 %}
         <li class="page-item">
-          <a href="{% url 'main:user_list' contents.number|add:"-5" %}" class="page-link"><<</a>
+          <a href="{% url 'main:like_list' contents.number|add:"-5" %}" class="page-link"><<</a>
         </li>
       {% else %}
         <li class="page-item disabled">
@@ -56,7 +56,7 @@
       {% endif %}
       {% if contents.has_previous %}
         <li class="page-item">
-          <a href="{% url 'main:user_list' contents.previous_page_number %}" class="page-link"><</a>
+          <a href="{% url 'main:like_list' contents.previous_page_number %}" class="page-link"><</a>
         </li>
       {% else %}
         <li class="page-item disabled">
@@ -68,7 +68,7 @@
       </li>
       {% if contents.has_next %}
         <li class="page-item">
-          <a href="{% url 'main:user_list' contents.next_page_number %}" class="page-link">></a>
+          <a href="{% url 'main:like_list' contents.next_page_number %}" class="page-link">></a>
         </li>
         {% else %}
         <li class="page-item disabled">
@@ -77,7 +77,7 @@
       {% endif %}
       {% if contents.number|add:"5" <= contents.paginator.num_pages %}
         <li class="page-item">
-          <a href="{% url 'main:user_list' contents.number|add:"5" %}" class="page-link">>></a>
+          <a href="{% url 'main:like_list' contents.number|add:"5" %}" class="page-link">>></a>
         </li>
       {% else %}
         <li class="page-item disabled">
@@ -86,7 +86,7 @@
       {% endif %}
       {% if contents.has_next %}
         <li class="page-item">
-          <a href="{% url 'main:user_list' contents.paginator.num_pages %}" class="page-link">{{ contents.paginator.num_pages }}</a>
+          <a href="{% url 'main:like_list' contents.paginator.num_pages %}" class="page-link">{{ contents.paginator.num_pages }}</a>
         </li>
       {% else %}
         <li class="page-item disabled">

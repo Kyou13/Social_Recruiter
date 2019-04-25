@@ -36,4 +36,15 @@ Twitterを使ったエンジニア採用
 % pipenv shell
 % python main.py runserver
 ```
-all-authの設定
+
+- setting all-auth
+  - `localhost:8000/admin` 
+
+```
+adminページ> 外部アカウントのsocial applications
+ Providor → Twitter
+ Name → Twitter
+ Client id →　{Your Consumer Key (API Key)}
+ Secret key → {Your Consumer Secret (API Secret)}
+ Sites → Chosen sitesにexample.comを追加
+```
