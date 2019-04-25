@@ -12,6 +12,7 @@ Twitterを使ったエンジニア採用
 - Python 3.7.3
   - pyenv + pipenv
 - Django 2.1.3
+- Posgtg
 
 ## Usage
 - Install pyenv
@@ -38,8 +39,7 @@ Twitterを使ったエンジニア採用
 ```
 
 - setting all-auth
-  - `localhost:8000/admin` 
-
+  - `localhost:8000/admin`
 ```
 adminページ> 外部アカウントのsocial applications
  Providor → Twitter
@@ -47,4 +47,10 @@ adminページ> 外部アカウントのsocial applications
  Client id →　{Your Consumer Key (API Key)}
  Secret key → {Your Consumer Secret (API Secret)}
  Sites → Chosen sitesにexample.comを追加
+```
+
+- Database
+  - ダンプファイルのリストア
+```
+psql twitter_scouter < backup.dump
 ```
