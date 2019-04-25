@@ -66,7 +66,7 @@ class Favorite(View, LoginRequiredMixin):
       twitter_user.like_num -= 1
       twitter_user.save()
       messages.warning(request, 'いいねを取り消しました')
-      return redirect(reverse_lazy('main:user_list', kwargs=dict(page=1)))
+      return redirect(request.META['HTTP_REFERER'])
     twitter_user.like_num += 1
     twitter_user.save()
     like = Like()
@@ -75,7 +75,7 @@ class Favorite(View, LoginRequiredMixin):
     like.save()
     messages.success(request, 'いいね!しました')
 
-    return redirect(reverse_lazy('main:user_list', kwargs=dict(page=1)))
+    return redirect(request.META['HTTP_REFERER'])
 
 class LikeList(View, LoginRequiredMixin):
   def get(self, request, *args, **kwargs):

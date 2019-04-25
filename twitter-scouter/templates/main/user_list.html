@@ -27,7 +27,6 @@
         <td class="align-middle like-td">
           <form name="like_form" action="{% url 'main:like' user.pk %}" method="post">
             {% csrf_token %}
-          <input name="next" type="hidden" value="{{ request.path }}">
             <button type="submit" class="button-as_like">
               {% if user.pk not in liked_user %}
                 <i class="fas fa-1x fa-heart like-deactive"></i>
