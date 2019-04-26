@@ -7,7 +7,9 @@ from .models import UserInfo, Like
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib import messages
 from django.urls import reverse_lazy
+from allauth.socialaccount.models import SocialAccount
 
+import json
 
 class Top(View):
   def get(self, request):
@@ -16,8 +18,10 @@ class Top(View):
 
 class DashBoard(View, LoginRequiredMixin):
   def get(self, request):
-
-    return render(request, 'main/dashboard.html')
+    context = {}
+    socialAccount = SocialAccount.objects.get(user=request.user).extra_data
+    context["user_detail"] = socialAccount
+    return render(request, 'main/dashboard.html', context)
 
 
 class SigninView(views.LoginView):
@@ -42,18 +46,27 @@ class SignoutView(views.LogoutView):
 
 
 class UserList(View, LoginRequiredMixin):
+  paginate_by = 20
+
   def get(self, request, **kwargs):
+    context = {}
     queryset = UserInfo.objects.all().order_by('-followers_count')
     liked_user = Like.objects.filter(user=request.user).values_list('twitter_user', flat=True)
     # TODO: per page can be change
-    paginator = Paginator(queryset, 20)
+    paginator = Paginator(queryset, self.paginate_by)
     try:
       contents = paginator.page(kwargs['page'])
     except PageNotAnInteger:
       contents = paginator.page(1)
     except EmptyPage:
       contents = paginator.page(paginator.num_pages)
-    return render(request, 'main/user_list.html', {'contents': contents, 'liked_user': liked_user})
+    context['contents'] = contents
+    context['liked_user'] = liked_user
+    return render(request, 'main/user_list.html', context)
+
+  def post(self, request, **kwargs):
+    self.paginate_by = int(request.POST.get('paginate_by'))
+    return self.get(request,**kwargs)
 
 
 class Favorite(View, LoginRequiredMixin):
@@ -65,17 +78,17 @@ class Favorite(View, LoginRequiredMixin):
       liking.delete()
       twitter_user.like_num -= 1
       twitter_user.save()
-      messages.warning(request, 'いいねを取り消しました')
       return redirect(request.META['HTTP_REFERER'])
+
     twitter_user.like_num += 1
     twitter_user.save()
     like = Like()
     like.user = request.user
     like.twitter_user = twitter_user
     like.save()
-    messages.success(request, 'いいね!しました')
 
     return redirect(request.META['HTTP_REFERER'])
+
 
 class LikeList(View, LoginRequiredMixin):
   def get(self, request, *args, **kwargs):
@@ -87,4 +100,6 @@ class LikeList(View, LoginRequiredMixin):
       contents = paginator.page(1)
     except EmptyPage:
       contents = paginator.page(paginator.num_pages)
-    return render(request, 'main/like_list.html', {'contents': contents})
+    context={}
+    context['contents'] = contents
+    return render(request, 'main/like_list.html', context)

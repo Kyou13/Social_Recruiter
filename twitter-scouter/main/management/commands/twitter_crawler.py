@@ -21,7 +21,6 @@ def get_user_info(targets):
 
 
 class Command(BaseCommand):
-
   def add_arguments(self, parser):
     parser.add_argument('targets', nargs='+')
 

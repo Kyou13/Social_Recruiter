@@ -152,6 +152,7 @@ a.article:hover {
   position: absolute;
   top: 0;
   right: 0;
+  margin: 0 auto;
 }
 
 #content.active {
@@ -180,3 +181,13 @@ a.article:hover {
   }
 }
 
+.screen_name{
+  color: rgba(0,0,0,0.5);
+  font-size: 0.5rem;
+}
+
+.profile_img img{
+  height: 32px;
+  width: auto;
+  vertical-align: middle;
+}

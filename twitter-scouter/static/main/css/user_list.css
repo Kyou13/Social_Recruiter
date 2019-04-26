@@ -3,11 +3,9 @@
   table-layout: fixed;
   word-wrap: break-word;
 }
-
 table td.twitter-name a{
   text-decoration: underline;
 }
-
 .button-as_like{
   background: none;
   border: none;
@@ -27,4 +25,7 @@ i.like-deactive{
 }
 .button-as_like:hover > i.like-deactive{
   color: #e0245e;
+}
+.is-hidden{
+  display: none;
 }
