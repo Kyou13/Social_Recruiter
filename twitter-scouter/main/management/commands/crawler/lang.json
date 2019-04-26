@@ -1,0 +1,22 @@
+{
+  "Python":[
+    "python",
+    "py"
+  ],
+  "Ruby":[
+    "ruby",
+    "rb"
+  ],
+  "Rails":[
+    "rails",
+    "RoR"
+  ],
+  "ML":[
+    "機械学習",
+    "ML",
+    "MachineLarning",
+    "deepLarning",
+    "AI",
+    "ArtificialIntelligence"
+  ]
+}

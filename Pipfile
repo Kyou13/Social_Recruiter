@@ -12,6 +12,9 @@ django-allauth = "*"
 django-environ = "*"
 psycopg2-binary = "*"
 django-bootstrap4 = "*"
+numpy = "*"
+pandas = "*"
+tqdm = "*"
 
 [requires]
 python_version = "3.7.3"
