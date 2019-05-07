@@ -8,8 +8,8 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib import messages
 from django.urls import reverse_lazy
 from allauth.socialaccount.models import SocialAccount
-
 import json
+from . import forms
 
 class Top(View):
   def get(self, request):
@@ -49,9 +49,19 @@ class UserList(View, LoginRequiredMixin):
   paginate_by = 20
 
   def get(self, request, **kwargs):
+    form = forms.Paginate(request.GET or None)
+    if 'paginate_by' in request.GET:
+      request.session['paginate_by'] = request.GET['paginate_by']
+
     context = {}
-    queryset = UserInfo.objects.all().order_by('-followers_count')
+    queryset = UserInfo.objects.all()
+    queryset = queryset.order_by('-followers_count')
     liked_user = Like.objects.filter(user=request.user).values_list('twitter_user', flat=True)
+    socialAccount = SocialAccount.objects.get(user=request.user).extra_data
+    context["user_detail"] = socialAccount
+
+    if 'paginate_by' in request.session:
+      self.paginate_by = request.session['paginate_by']
     # TODO: per page can be change
     paginator = Paginator(queryset, self.paginate_by)
     try:
@@ -62,11 +72,10 @@ class UserList(View, LoginRequiredMixin):
       contents = paginator.page(paginator.num_pages)
     context['contents'] = contents
     context['liked_user'] = liked_user
-    return render(request, 'main/user_list.html', context)
+    context['form'] = form
+    context['paginate_by'] = self.paginate_by
 
-  def post(self, request, **kwargs):
-    self.paginate_by = int(request.POST.get('paginate_by'))
-    return self.get(request,**kwargs)
+    return render(request, 'main/user_list.html', context)
 
 
 class Favorite(View, LoginRequiredMixin):
@@ -102,4 +111,6 @@ class LikeList(View, LoginRequiredMixin):
       contents = paginator.page(paginator.num_pages)
     context={}
     context['contents'] = contents
+    socialAccount = SocialAccount.objects.get(user=request.user).extra_data
+    context["user_detail"] = socialAccount
     return render(request, 'main/like_list.html', context)
